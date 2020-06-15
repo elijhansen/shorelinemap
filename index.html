@@ -8,8 +8,6 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/filter.css">
-<link rel="stylesheet" href="css/nouislider.min.css">
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
@@ -36,9 +34,6 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/leaflet-measure.js"></script>
-        <script src="js/tailDT.js"></script>
-<script src="js/nouislider.min.js"></script>
-<script src="js/wNumb.js"></script>
         <script src="data/WaterFeatures_2.js"></script>
         <script src="data/Land_3.js"></script>
         <script src="data/Weirs_4.js"></script>
@@ -49,7 +44,7 @@
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:20, minZoom:6
-        }).fitBounds([[42.14440140466494,-87.79054930369124],[42.14782635569504,-87.78469472662496]]);
+        }).fitBounds([[42.14114111088698,-87.80121273917597],[42.15085291823551,-87.77779443091056]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -392,7 +387,7 @@
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/Buildings_8.png" /> Buildings': layer_Buildings_8,'<img src="legend/Bridges_7.png" /> Bridges': layer_Bridges_7,'<img src="legend/Causeways_6.png" /> Causeways': layer_Causeways_6,'<img src="legend/BoatLaunches_5.png" /> Boat Launches': layer_BoatLaunches_5,'<img src="legend/Weirs_4.png" /> Weirs': layer_Weirs_4,'<img src="legend/Land_3.png" /> Land': layer_Land_3,'<img src="legend/WaterFeatures_2.png" /> Water Features': layer_WaterFeatures_2,"OpenStreetMap": layer_OpenStreetMap_1,"Google Satellite": layer_GoogleSatellite_0,},{collapsed:false}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/Buildings_8.png" /> Buildings': layer_Buildings_8,'<img src="legend/Bridges_7.png" /> Bridges': layer_Bridges_7,'<img src="legend/Causeways_6.png" /> Causeways': layer_Causeways_6,'<img src="legend/BoatLaunches_5.png" /> Boat Launches': layer_BoatLaunches_5,'<img src="legend/Weirs_4.png" /> Weirs': layer_Weirs_4,'<img src="legend/Land_3.png" /> Land': layer_Land_3,'<img src="legend/WaterFeatures_2.png" /> Water Features': layer_WaterFeatures_2,"OpenStreetMap": layer_OpenStreetMap_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
         setBounds();
         var i = 0;
         layer_WaterFeatures_2.eachLayer(function(layer) {
@@ -485,293 +480,6 @@
               addLabel(layer, i);
               i++;
         });
-        var mapDiv = document.getElementById('map');
-        var row = document.createElement('div');
-        row.className="row";
-        row.id="all";
-        row.style.height = "100%";
-        var col1 = document.createElement('div');
-        col1.className="col9";
-        col1.id = "mapWindow";
-        col1.style.height = "99%";
-        col1.style.width = "80%";
-        col1.style.display = "inline-block";
-        var col2 = document.createElement('div');
-        col2.className="col3";
-        col2.id = "menu";
-        col2.style.display = "inline-block";
-        mapDiv.parentNode.insertBefore(row, mapDiv);
-        document.getElementById("all").appendChild(col1);
-        document.getElementById("all").appendChild(col2);
-        col1.appendChild(mapDiv)
-        var Filters = {"id": "int","Weirs": "str","Name": "str"};
-        function filterFunc() {
-          map.eachLayer(function(lyr){
-          if ("options" in lyr && "dataVar" in lyr["options"]){
-            features = this[lyr["options"]["dataVar"]].features.slice(0);
-            try{
-              for (key in Filters){
-                if (Filters[key] == "str" || Filters[key] == "bool"){
-                  var selection = [];
-                  var options = document.getElementById("sel_" + key).options
-                  for (var i=0; i < options.length; i++) {
-                    if (options[i].selected) selection.push(options[i].value);
-                  }
-                    try{
-                      if (key in features[0].properties){
-                        for (i = features.length - 1;
-                          i >= 0; --i){
-                          if (selection.indexOf(
-                          features[i].properties[key])<0
-                          && selection.length>0) {
-                          features.splice(i,1);
-                          }
-                        }
-                      }
-                    } catch(err){
-                  }
-                }
-                if (Filters[key] == "int"){
-                  sliderVals =  document.getElementById(
-                    "div_" + key).noUiSlider.get();
-                  try{
-                    if (key in features[0].properties){
-                    for (i = features.length - 1; i >= 0; --i){
-                      if (parseInt(features[i].properties[key])
-                          < sliderVals[0]
-                          || parseInt(features[i].properties[key])
-                          > sliderVals[1]){
-                            features.splice(i,1);
-                          }
-                        }
-                      }
-                    } catch(err){
-                    }
-                  }
-                if (Filters[key] == "real"){
-                  sliderVals =  document.getElementById(
-                    "div_" + key).noUiSlider.get();
-                  try{
-                    if (key in features[0].properties){
-                    for (i = features.length - 1; i >= 0; --i){
-                      if (features[i].properties[key]
-                          < sliderVals[0]
-                          || features[i].properties[key]
-                          > sliderVals[1]){
-                            features.splice(i,1);
-                          }
-                        }
-                      }
-                    } catch(err){
-                    }
-                  }
-                if (Filters[key] == "date"
-                  || Filters[key] == "datetime"
-                  || Filters[key] == "time"){
-                  try{
-                    if (key in features[0].properties){
-                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
-                      startdate = document.getElementById("dat_" +
-                        HTMLkey + "_date1").value.replace(" ", "T");
-                      enddate = document.getElementById("dat_" +
-                        HTMLkey + "_date2").value.replace(" ", "T");
-                      for (i = features.length - 1; i >= 0; --i){
-                        if (features[i].properties[key] < startdate
-                          || features[i].properties[key] > enddate){
-                          features.splice(i,1);
-                        }
-                      }
-                    }
-                  } catch(err){
-                  }
-                }
-              }
-            } catch(err){
-            }
-          this[lyr["options"]["layerName"]].clearLayers();
-          this[lyr["options"]["layerName"]].addData(features);
-          }
-          })
-        }
-            document.getElementById("menu").appendChild(
-                document.createElement("div"));
-            var div_id = document.createElement("div");
-            div_id.id = "div_id";
-            div_id.className = "slider";
-            document.getElementById("menu").appendChild(div_id);
-            var lab_id = document.createElement('div');
-            lab_id.innerHTML  = 'id: <span id="val_id"></span>';
-            lab_id.className = 'filterlabel';
-            document.getElementById("menu").appendChild(lab_id);
-            var reset_id = document.createElement('div');
-            reset_id.innerHTML = 'clear filter';
-            reset_id.className = 'filterlabel';
-            lab_id.className = 'filterlabel';
-            reset_id.onclick = function() {
-                sel_id.noUiSlider.reset();
-            };
-            document.getElementById("menu").appendChild(reset_id);
-            var sel_id = document.getElementById('div_id');
-            noUiSlider.create(sel_id, {
-                connect: true,
-                start: [0, NULL],
-                step: 1,
-                format: wNumb({
-                    decimals: 0,
-                    }),
-                range: {
-                min: 0,
-                max: NULL
-                }
-            });
-            sel_id.noUiSlider.on('update', function (values) {
-            filterVals =[];
-            for (value in values){
-            filterVals.push(parseInt(value))
-            }
-            val_id = document.getElementById('val_id');
-            val_id.innerHTML = values.join(' - ');
-                filterFunc()
-            });
-            document.getElementById("menu").appendChild(
-                document.createElement("div"));
-            var div_Weirs = document.createElement('div');
-            div_Weirs.id = "div_Weirs";
-            div_Weirs.className= "filterselect";
-            document.getElementById("menu").appendChild(div_Weirs);
-            sel_Weirs = document.createElement('select');
-            sel_Weirs.multiple = true;
-            sel_Weirs.size = 2;
-            sel_Weirs.id = "sel_Weirs";
-            var Weirs_options_str = "<option value='' unselected></option>";
-            sel_Weirs.onchange = function(){filterFunc()};
-            Weirs_options_str  += '<option value="NULL">NULL</option>';
-            Weirs_options_str  += '<option value="South">South</option>';
-            sel_Weirs.innerHTML = Weirs_options_str;
-            div_Weirs.appendChild(sel_Weirs);
-            var lab_Weirs = document.createElement('div');
-            lab_Weirs.innerHTML = 'Weirs';
-            lab_Weirs.className = 'filterlabel';
-            div_Weirs.appendChild(lab_Weirs);
-            var reset_Weirs = document.createElement('div');
-            reset_Weirs.innerHTML = 'clear filter';
-            reset_Weirs.className = 'filterlabel';
-            reset_Weirs.onclick = function() {
-                var options = document.getElementById("sel_Weirs").options;
-                for (var i=0; i < options.length; i++) {
-                    options[i].selected = false;
-                }
-                filterFunc();
-            };
-            div_Weirs.appendChild(reset_Weirs);
-            document.getElementById("menu").appendChild(
-                document.createElement("div"));
-            var div_Name = document.createElement('div');
-            div_Name.id = "div_Name";
-            div_Name.className= "filterselect";
-            document.getElementById("menu").appendChild(div_Name);
-            sel_Name = document.createElement('select');
-            sel_Name.multiple = true;
-            sel_Name.size = 10;
-            sel_Name.id = "sel_Name";
-            var Name_options_str = "<option value='' unselected></option>";
-            sel_Name.onchange = function(){filterFunc()};
-            Name_options_str  += '<option value="NULL">NULL</option>';
-            Name_options_str  += '<option value="(North) East Shoreline">(North) East Shoreline</option>';
-            Name_options_str  += '<option value="(South) East Shoreline">(South) East Shoreline</option>';
-            Name_options_str  += '<option value="1 o&apos;clock Lilly Bed">1 o&apos;clock Lilly Bed</option>';
-            Name_options_str  += '<option value="1 o&apos;clock boulders">1 o&apos;clock boulders</option>';
-            Name_options_str  += '<option value="11 o&apos;clock Boulders">11 o&apos;clock Boulders</option>';
-            Name_options_str  += '<option value="11 o&apos;clock Lotus Bed">11 o&apos;clock Lotus Bed</option>';
-            Name_options_str  += '<option value="312">312</option>';
-            Name_options_str  += '<option value="Algae Shed">Algae Shed</option>';
-            Name_options_str  += '<option value="Aquatic Garden">Aquatic Garden</option>';
-            Name_options_str  += '<option value="Arch">Arch</option>';
-            Name_options_str  += '<option value="Arch Lillies">Arch Lillies</option>';
-            Name_options_str  += '<option value="Arch Lotuses">Arch Lotuses</option>';
-            Name_options_str  += '<option value="Bird Island">Bird Island</option>';
-            Name_options_str  += '<option value="Bird Island C.way">Bird Island C.way</option>';
-            Name_options_str  += '<option value="Childeren&apos;s Cove">Childeren&apos;s Cove</option>';
-            Name_options_str  += '<option value="East Great Basin">East Great Basin</option>';
-            Name_options_str  += '<option value="East Japanese Island">East Japanese Island</option>';
-            Name_options_str  += '<option value="East Spider">East Spider</option>';
-            Name_options_str  += '<option value="East Spider (South">East Spider (South</option>';
-            Name_options_str  += '<option value="East of Arch Bridge">East of Arch Bridge</option>';
-            Name_options_str  += '<option value="Esplinade">Esplinade</option>';
-            Name_options_str  += '<option value="Evening Island">Evening Island</option>';
-            Name_options_str  += '<option value="Football Field">Football Field</option>';
-            Name_options_str  += '<option value="Forgotten Shoreline">Forgotten Shoreline</option>';
-            Name_options_str  += '<option value="Fruit and Veg">Fruit and Veg</option>';
-            Name_options_str  += '<option value="Grad Student Site">Grad Student Site</option>';
-            Name_options_str  += '<option value="Grate">Grate</option>';
-            Name_options_str  += '<option value="Horse Shoe">Horse Shoe</option>';
-            Name_options_str  += '<option value="Japanese">Japanese</option>';
-            Name_options_str  += '<option value="Japanese Boat Lanch">Japanese Boat Lanch</option>';
-            Name_options_str  += '<option value="Japanese C.way">Japanese C.way</option>';
-            Name_options_str  += '<option value="Japanese Cove">Japanese Cove</option>';
-            Name_options_str  += '<option value="Japanese Screen">Japanese Screen</option>';
-            Name_options_str  += '<option value="Lookout Point">Lookout Point</option>';
-            Name_options_str  += '<option value="Main C.way">Main C.way</option>';
-            Name_options_str  += '<option value="Main Japanese Island">Main Japanese Island</option>';
-            Name_options_str  += '<option value="McGinley Lilly Bed">McGinley Lilly Bed</option>';
-            Name_options_str  += '<option value="McGinley&apos;s Pavillion">McGinley&apos;s Pavillion</option>';
-            Name_options_str  += '<option value="Merlin">Merlin</option>';
-            Name_options_str  += '<option value="Mid Japanese Island">Mid Japanese Island</option>';
-            Name_options_str  += '<option value="North Japanese C.way">North Japanese C.way</option>';
-            Name_options_str  += '<option value="North Japanese Island">North Japanese Island</option>';
-            Name_options_str  += '<option value="North Lake Boat Lanch">North Lake Boat Lanch</option>';
-            Name_options_str  += '<option value="North Pebble Beach">North Pebble Beach</option>';
-            Name_options_str  += '<option value="North of Japanese Bridge">North of Japanese Bridge</option>';
-            Name_options_str  += '<option value="Peninsula">Peninsula</option>';
-            Name_options_str  += '<option value="Plant Science Boat Launch">Plant Science Boat Launch</option>';
-            Name_options_str  += '<option value="Plant Science Center">Plant Science Center</option>';
-            Name_options_str  += '<option value="Regenstein">Regenstein</option>';
-            Name_options_str  += '<option value="Serpentine">Serpentine</option>';
-            Name_options_str  += '<option value="Shoin Cove">Shoin Cove</option>';
-            Name_options_str  += '<option value="Slopey Area">Slopey Area</option>';
-            Name_options_str  += '<option value="Smeltzer">Smeltzer</option>';
-            Name_options_str  += '<option value="South Pebble Beach">South Pebble Beach</option>';
-            Name_options_str  += '<option value="South of Japanese Bridge">South of Japanese Bridge</option>';
-            Name_options_str  += '<option value="Spider">Spider</option>';
-            Name_options_str  += '<option value="Spider Island">Spider Island</option>';
-            Name_options_str  += '<option value="Sundial (North)">Sundial (North)</option>';
-            Name_options_str  += '<option value="Sundial (South)">Sundial (South)</option>';
-            Name_options_str  += '<option value="Terrace">Terrace</option>';
-            Name_options_str  += '<option value="The Ken">The Ken</option>';
-            Name_options_str  += '<option value="Trailer">Trailer</option>';
-            Name_options_str  += '<option value="Trailer Barn">Trailer Barn</option>';
-            Name_options_str  += '<option value="Trellis">Trellis</option>';
-            Name_options_str  += '<option value="Visitor&apos;s (Northeast)">Visitor&apos;s (Northeast)</option>';
-            Name_options_str  += '<option value="Visitor&apos;s (Northwest)">Visitor&apos;s (Northwest)</option>';
-            Name_options_str  += '<option value="Visitor&apos;s (Southeast)">Visitor&apos;s (Southeast)</option>';
-            Name_options_str  += '<option value="Visitor&apos;s (Southwest)">Visitor&apos;s (Southwest)</option>';
-            Name_options_str  += '<option value="Visitor&apos;s Center">Visitor&apos;s Center</option>';
-            Name_options_str  += '<option value="Visitors">Visitors</option>';
-            Name_options_str  += '<option value="West Electric Gate">West Electric Gate</option>';
-            Name_options_str  += '<option value="West Great Basin">West Great Basin</option>';
-            Name_options_str  += '<option value="West Shoreline (North)">West Shoreline (North)</option>';
-            Name_options_str  += '<option value="West Shoreline (South)">West Shoreline (South)</option>';
-            Name_options_str  += '<option value="West Spider">West Spider</option>';
-            Name_options_str  += '<option value="West of Arch Bridge">West of Arch Bridge</option>';
-            Name_options_str  += '<option value="West of Japanese Boat Launch">West of Japanese Boat Launch</option>';
-            Name_options_str  += '<option value="Zigzag">Zigzag</option>';
-            sel_Name.innerHTML = Name_options_str;
-            div_Name.appendChild(sel_Name);
-            var lab_Name = document.createElement('div');
-            lab_Name.innerHTML = 'Name';
-            lab_Name.className = 'filterlabel';
-            div_Name.appendChild(lab_Name);
-            var reset_Name = document.createElement('div');
-            reset_Name.innerHTML = 'clear filter';
-            reset_Name.className = 'filterlabel';
-            reset_Name.onclick = function() {
-                var options = document.getElementById("sel_Name").options;
-                for (var i=0; i < options.length; i++) {
-                    options[i].selected = false;
-                }
-                filterFunc();
-            };
-            div_Name.appendChild(reset_Name);
         resetLabels([layer_WaterFeatures_2,layer_Land_3,layer_Weirs_4,layer_BoatLaunches_5,layer_Causeways_6,layer_Bridges_7,layer_Buildings_8]);
         map.on("zoomend", function(){
             resetLabels([layer_WaterFeatures_2,layer_Land_3,layer_Weirs_4,layer_BoatLaunches_5,layer_Causeways_6,layer_Bridges_7,layer_Buildings_8]);
