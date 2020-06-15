@@ -35,17 +35,18 @@
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/leaflet-measure.js"></script>
         <script src="data/BodiesofWater_1.js"></script>
-        <script src="data/Land_3.js"></script>
-        <script src="data/Weirs_4.js"></script>
-        <script src="data/BoatLaunches_5.js"></script>
-        <script src="data/Causeways_6.js"></script>
-        <script src="data/Bridges_7.js"></script>
-        <script src="data/Buildings_8.js"></script>
-        <script src="data/LandFeatures_9.js"></script>
+        <script src="data/WaterFeatures_3.js"></script>
+        <script src="data/Land_4.js"></script>
+        <script src="data/Weirs_5.js"></script>
+        <script src="data/BoatLaunches_6.js"></script>
+        <script src="data/Causeways_7.js"></script>
+        <script src="data/Bridges_8.js"></script>
+        <script src="data/Buildings_9.js"></script>
+        <script src="data/LandFeatures_10.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:20, minZoom:6
-        }).fitBounds([[42.14738440724043,-87.79016969328354],[42.1490968252267,-87.78724240475042]]);
+        }).fitBounds([[42.14450519958781,-87.79212955097489],[42.14693316208735,-87.78627497390887]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -131,7 +132,48 @@
         });
         layer_OpenStreetMap_2;
         map.addLayer(layer_OpenStreetMap_2);
-        function pop_Land_3(feature, layer) {
+        function pop_WaterFeatures_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>id</strong><br />' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_WaterFeatures_3_0() {
+            return {
+                pane: 'pane_WaterFeatures_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(86,218,192,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_WaterFeatures_3');
+        map.getPane('pane_WaterFeatures_3').style.zIndex = 403;
+        map.getPane('pane_WaterFeatures_3').style['mix-blend-mode'] = 'normal';
+        var layer_WaterFeatures_3 = new L.geoJson(json_WaterFeatures_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_WaterFeatures_3',
+            layerName: 'layer_WaterFeatures_3',
+            pane: 'pane_WaterFeatures_3',
+            onEachFeature: pop_WaterFeatures_3,
+            style: style_WaterFeatures_3_0,
+        });
+        bounds_group.addLayer(layer_WaterFeatures_3);
+        map.addLayer(layer_WaterFeatures_3);
+        function pop_Land_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
@@ -143,9 +185,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Land_3_0() {
+        function style_Land_4_0() {
             return {
-                pane: 'pane_Land_3',
+                pane: 'pane_Land_4',
                 opacity: 1,
                 color: 'rgba(56,128,54,1.0)',
                 dashArray: '',
@@ -158,21 +200,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Land_3');
-        map.getPane('pane_Land_3').style.zIndex = 403;
-        map.getPane('pane_Land_3').style['mix-blend-mode'] = 'normal';
-        var layer_Land_3 = new L.geoJson(json_Land_3, {
+        map.createPane('pane_Land_4');
+        map.getPane('pane_Land_4').style.zIndex = 404;
+        map.getPane('pane_Land_4').style['mix-blend-mode'] = 'normal';
+        var layer_Land_4 = new L.geoJson(json_Land_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Land_3',
-            layerName: 'layer_Land_3',
-            pane: 'pane_Land_3',
-            onEachFeature: pop_Land_3,
-            style: style_Land_3_0,
+            dataVar: 'json_Land_4',
+            layerName: 'layer_Land_4',
+            pane: 'pane_Land_4',
+            onEachFeature: pop_Land_4,
+            style: style_Land_4_0,
         });
-        bounds_group.addLayer(layer_Land_3);
-        map.addLayer(layer_Land_3);
-        function pop_Weirs_4(feature, layer) {
+        bounds_group.addLayer(layer_Land_4);
+        map.addLayer(layer_Land_4);
+        function pop_Weirs_5(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
@@ -184,9 +226,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Weirs_4_0() {
+        function style_Weirs_5_0() {
             return {
-                pane: 'pane_Weirs_4',
+                pane: 'pane_Weirs_5',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -199,21 +241,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Weirs_4');
-        map.getPane('pane_Weirs_4').style.zIndex = 404;
-        map.getPane('pane_Weirs_4').style['mix-blend-mode'] = 'normal';
-        var layer_Weirs_4 = new L.geoJson(json_Weirs_4, {
+        map.createPane('pane_Weirs_5');
+        map.getPane('pane_Weirs_5').style.zIndex = 405;
+        map.getPane('pane_Weirs_5').style['mix-blend-mode'] = 'normal';
+        var layer_Weirs_5 = new L.geoJson(json_Weirs_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Weirs_4',
-            layerName: 'layer_Weirs_4',
-            pane: 'pane_Weirs_4',
-            onEachFeature: pop_Weirs_4,
-            style: style_Weirs_4_0,
+            dataVar: 'json_Weirs_5',
+            layerName: 'layer_Weirs_5',
+            pane: 'pane_Weirs_5',
+            onEachFeature: pop_Weirs_5,
+            style: style_Weirs_5_0,
         });
-        bounds_group.addLayer(layer_Weirs_4);
-        map.addLayer(layer_Weirs_4);
-        function pop_BoatLaunches_5(feature, layer) {
+        bounds_group.addLayer(layer_Weirs_5);
+        map.addLayer(layer_Weirs_5);
+        function pop_BoatLaunches_6(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
@@ -225,9 +267,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_BoatLaunches_5_0() {
+        function style_BoatLaunches_6_0() {
             return {
-                pane: 'pane_BoatLaunches_5',
+                pane: 'pane_BoatLaunches_6',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -240,21 +282,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_BoatLaunches_5');
-        map.getPane('pane_BoatLaunches_5').style.zIndex = 405;
-        map.getPane('pane_BoatLaunches_5').style['mix-blend-mode'] = 'normal';
-        var layer_BoatLaunches_5 = new L.geoJson(json_BoatLaunches_5, {
+        map.createPane('pane_BoatLaunches_6');
+        map.getPane('pane_BoatLaunches_6').style.zIndex = 406;
+        map.getPane('pane_BoatLaunches_6').style['mix-blend-mode'] = 'normal';
+        var layer_BoatLaunches_6 = new L.geoJson(json_BoatLaunches_6, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_BoatLaunches_5',
-            layerName: 'layer_BoatLaunches_5',
-            pane: 'pane_BoatLaunches_5',
-            onEachFeature: pop_BoatLaunches_5,
-            style: style_BoatLaunches_5_0,
+            dataVar: 'json_BoatLaunches_6',
+            layerName: 'layer_BoatLaunches_6',
+            pane: 'pane_BoatLaunches_6',
+            onEachFeature: pop_BoatLaunches_6,
+            style: style_BoatLaunches_6_0,
         });
-        bounds_group.addLayer(layer_BoatLaunches_5);
-        map.addLayer(layer_BoatLaunches_5);
-        function pop_Causeways_6(feature, layer) {
+        bounds_group.addLayer(layer_BoatLaunches_6);
+        map.addLayer(layer_BoatLaunches_6);
+        function pop_Causeways_7(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
@@ -266,9 +308,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Causeways_6_0() {
+        function style_Causeways_7_0() {
             return {
-                pane: 'pane_Causeways_6',
+                pane: 'pane_Causeways_7',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -281,21 +323,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Causeways_6');
-        map.getPane('pane_Causeways_6').style.zIndex = 406;
-        map.getPane('pane_Causeways_6').style['mix-blend-mode'] = 'normal';
-        var layer_Causeways_6 = new L.geoJson(json_Causeways_6, {
+        map.createPane('pane_Causeways_7');
+        map.getPane('pane_Causeways_7').style.zIndex = 407;
+        map.getPane('pane_Causeways_7').style['mix-blend-mode'] = 'normal';
+        var layer_Causeways_7 = new L.geoJson(json_Causeways_7, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Causeways_6',
-            layerName: 'layer_Causeways_6',
-            pane: 'pane_Causeways_6',
-            onEachFeature: pop_Causeways_6,
-            style: style_Causeways_6_0,
+            dataVar: 'json_Causeways_7',
+            layerName: 'layer_Causeways_7',
+            pane: 'pane_Causeways_7',
+            onEachFeature: pop_Causeways_7,
+            style: style_Causeways_7_0,
         });
-        bounds_group.addLayer(layer_Causeways_6);
-        map.addLayer(layer_Causeways_6);
-        function pop_Bridges_7(feature, layer) {
+        bounds_group.addLayer(layer_Causeways_7);
+        map.addLayer(layer_Causeways_7);
+        function pop_Bridges_8(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
@@ -307,9 +349,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Bridges_7_0() {
+        function style_Bridges_8_0() {
             return {
-                pane: 'pane_Bridges_7',
+                pane: 'pane_Bridges_8',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -322,21 +364,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Bridges_7');
-        map.getPane('pane_Bridges_7').style.zIndex = 407;
-        map.getPane('pane_Bridges_7').style['mix-blend-mode'] = 'normal';
-        var layer_Bridges_7 = new L.geoJson(json_Bridges_7, {
+        map.createPane('pane_Bridges_8');
+        map.getPane('pane_Bridges_8').style.zIndex = 408;
+        map.getPane('pane_Bridges_8').style['mix-blend-mode'] = 'normal';
+        var layer_Bridges_8 = new L.geoJson(json_Bridges_8, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Bridges_7',
-            layerName: 'layer_Bridges_7',
-            pane: 'pane_Bridges_7',
-            onEachFeature: pop_Bridges_7,
-            style: style_Bridges_7_0,
+            dataVar: 'json_Bridges_8',
+            layerName: 'layer_Bridges_8',
+            pane: 'pane_Bridges_8',
+            onEachFeature: pop_Bridges_8,
+            style: style_Bridges_8_0,
         });
-        bounds_group.addLayer(layer_Bridges_7);
-        map.addLayer(layer_Bridges_7);
-        function pop_Buildings_8(feature, layer) {
+        bounds_group.addLayer(layer_Bridges_8);
+        map.addLayer(layer_Bridges_8);
+        function pop_Buildings_9(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
@@ -348,9 +390,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Buildings_8_0() {
+        function style_Buildings_9_0() {
             return {
-                pane: 'pane_Buildings_8',
+                pane: 'pane_Buildings_9',
                 opacity: 1,
                 color: 'rgba(247,247,247,1.0)',
                 dashArray: '',
@@ -363,21 +405,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_Buildings_8');
-        map.getPane('pane_Buildings_8').style.zIndex = 408;
-        map.getPane('pane_Buildings_8').style['mix-blend-mode'] = 'normal';
-        var layer_Buildings_8 = new L.geoJson(json_Buildings_8, {
+        map.createPane('pane_Buildings_9');
+        map.getPane('pane_Buildings_9').style.zIndex = 409;
+        map.getPane('pane_Buildings_9').style['mix-blend-mode'] = 'normal';
+        var layer_Buildings_9 = new L.geoJson(json_Buildings_9, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Buildings_8',
-            layerName: 'layer_Buildings_8',
-            pane: 'pane_Buildings_8',
-            onEachFeature: pop_Buildings_8,
-            style: style_Buildings_8_0,
+            dataVar: 'json_Buildings_9',
+            layerName: 'layer_Buildings_9',
+            pane: 'pane_Buildings_9',
+            onEachFeature: pop_Buildings_9,
+            style: style_Buildings_9_0,
         });
-        bounds_group.addLayer(layer_Buildings_8);
-        map.addLayer(layer_Buildings_8);
-        function pop_LandFeatures_9(feature, layer) {
+        bounds_group.addLayer(layer_Buildings_9);
+        map.addLayer(layer_Buildings_9);
+        function pop_LandFeatures_10(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
@@ -389,9 +431,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_LandFeatures_9_0() {
+        function style_LandFeatures_10_0() {
             return {
-                pane: 'pane_LandFeatures_9',
+                pane: 'pane_LandFeatures_10',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -404,20 +446,20 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_LandFeatures_9');
-        map.getPane('pane_LandFeatures_9').style.zIndex = 409;
-        map.getPane('pane_LandFeatures_9').style['mix-blend-mode'] = 'normal';
-        var layer_LandFeatures_9 = new L.geoJson(json_LandFeatures_9, {
+        map.createPane('pane_LandFeatures_10');
+        map.getPane('pane_LandFeatures_10').style.zIndex = 410;
+        map.getPane('pane_LandFeatures_10').style['mix-blend-mode'] = 'normal';
+        var layer_LandFeatures_10 = new L.geoJson(json_LandFeatures_10, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_LandFeatures_9',
-            layerName: 'layer_LandFeatures_9',
-            pane: 'pane_LandFeatures_9',
-            onEachFeature: pop_LandFeatures_9,
-            style: style_LandFeatures_9_0,
+            dataVar: 'json_LandFeatures_10',
+            layerName: 'layer_LandFeatures_10',
+            pane: 'pane_LandFeatures_10',
+            onEachFeature: pop_LandFeatures_10,
+            style: style_LandFeatures_10_0,
         });
-        bounds_group.addLayer(layer_LandFeatures_9);
-        map.addLayer(layer_LandFeatures_9);
+        bounds_group.addLayer(layer_LandFeatures_10);
+        map.addLayer(layer_LandFeatures_10);
         var osmGeocoder = new L.Control.Geocoder({
             collapsed: true,
             position: 'topleft',
@@ -429,7 +471,7 @@
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/LandFeatures_9.png" /> Land Features': layer_LandFeatures_9,'<img src="legend/Buildings_8.png" /> Buildings': layer_Buildings_8,'<img src="legend/Bridges_7.png" /> Bridges': layer_Bridges_7,'<img src="legend/Causeways_6.png" /> Causeways': layer_Causeways_6,'<img src="legend/BoatLaunches_5.png" /> Boat Launches': layer_BoatLaunches_5,'<img src="legend/Weirs_4.png" /> Weirs': layer_Weirs_4,'<img src="legend/Land_3.png" /> Land': layer_Land_3,"OpenStreetMap": layer_OpenStreetMap_2,'<img src="legend/BodiesofWater_1.png" /> Bodies of Water': layer_BodiesofWater_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/LandFeatures_10.png" /> Land Features': layer_LandFeatures_10,'<img src="legend/Buildings_9.png" /> Buildings': layer_Buildings_9,'<img src="legend/Bridges_8.png" /> Bridges': layer_Bridges_8,'<img src="legend/Causeways_7.png" /> Causeways': layer_Causeways_7,'<img src="legend/BoatLaunches_6.png" /> Boat Launches': layer_BoatLaunches_6,'<img src="legend/Weirs_5.png" /> Weirs': layer_Weirs_5,'<img src="legend/Land_4.png" /> Land': layer_Land_4,'<img src="legend/WaterFeatures_3.png" /> Water Features': layer_WaterFeatures_3,"OpenStreetMap": layer_OpenStreetMap_2,'<img src="legend/BodiesofWater_1.png" /> Bodies of Water': layer_BodiesofWater_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
         setBounds();
         var i = 0;
         layer_BodiesofWater_1.eachLayer(function(layer) {
@@ -445,12 +487,12 @@
               i++;
         });
         var i = 0;
-        layer_Land_3.eachLayer(function(layer) {
+        layer_WaterFeatures_3.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #003400; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Land_3'});
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #000091; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_WaterFeatures_3'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -458,12 +500,12 @@
               i++;
         });
         var i = 0;
-        layer_Weirs_4.eachLayer(function(layer) {
+        layer_Land_4.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Weirs'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Weirs']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Weirs_4'});
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #003400; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Land_4'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -471,12 +513,12 @@
               i++;
         });
         var i = 0;
-        layer_BoatLaunches_5.eachLayer(function(layer) {
+        layer_Weirs_5.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #006f00; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_BoatLaunches_5'});
+            layer.bindTooltip((layer.feature.properties['Weirs'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Weirs']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Weirs_5'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -484,12 +526,12 @@
               i++;
         });
         var i = 0;
-        layer_Causeways_6.eachLayer(function(layer) {
+        layer_BoatLaunches_6.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #04144e; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Causeways_6'});
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #006f00; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_BoatLaunches_6'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -497,12 +539,12 @@
               i++;
         });
         var i = 0;
-        layer_Bridges_7.eachLayer(function(layer) {
+        layer_Causeways_7.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Bridge'] !== null?String('<div style="color: #453713; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Bridge']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Bridges_7'});
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #04144e; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Causeways_7'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -510,12 +552,12 @@
               i++;
         });
         var i = 0;
-        layer_Buildings_8.eachLayer(function(layer) {
+        layer_Bridges_8.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #424242; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Buildings_8'});
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #453713; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Bridges_8'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
@@ -523,27 +565,40 @@
               i++;
         });
         var i = 0;
-        layer_LandFeatures_9.eachLayer(function(layer) {
+        layer_Buildings_9.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_LandFeatures_9'});
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #424242; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Buildings_9'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
               addLabel(layer, i);
               i++;
         });
-        resetLabels([layer_BodiesofWater_1,layer_Land_3,layer_Weirs_4,layer_BoatLaunches_5,layer_Causeways_6,layer_Bridges_7,layer_Buildings_8,layer_LandFeatures_9]);
+        var i = 0;
+        layer_LandFeatures_10.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_LandFeatures_10'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_BodiesofWater_1,layer_WaterFeatures_3,layer_Land_4,layer_Weirs_5,layer_BoatLaunches_6,layer_Causeways_7,layer_Bridges_8,layer_Buildings_9,layer_LandFeatures_10]);
         map.on("zoomend", function(){
-            resetLabels([layer_BodiesofWater_1,layer_Land_3,layer_Weirs_4,layer_BoatLaunches_5,layer_Causeways_6,layer_Bridges_7,layer_Buildings_8,layer_LandFeatures_9]);
+            resetLabels([layer_BodiesofWater_1,layer_WaterFeatures_3,layer_Land_4,layer_Weirs_5,layer_BoatLaunches_6,layer_Causeways_7,layer_Bridges_8,layer_Buildings_9,layer_LandFeatures_10]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_BodiesofWater_1,layer_Land_3,layer_Weirs_4,layer_BoatLaunches_5,layer_Causeways_6,layer_Bridges_7,layer_Buildings_8,layer_LandFeatures_9]);
+            resetLabels([layer_BodiesofWater_1,layer_WaterFeatures_3,layer_Land_4,layer_Weirs_5,layer_BoatLaunches_6,layer_Causeways_7,layer_Bridges_8,layer_Buildings_9,layer_LandFeatures_10]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_BodiesofWater_1,layer_Land_3,layer_Weirs_4,layer_BoatLaunches_5,layer_Causeways_6,layer_Bridges_7,layer_Buildings_8,layer_LandFeatures_9]);
+            resetLabels([layer_BodiesofWater_1,layer_WaterFeatures_3,layer_Land_4,layer_Weirs_5,layer_BoatLaunches_6,layer_Causeways_7,layer_Bridges_8,layer_Buildings_9,layer_LandFeatures_10]);
         });
         </script>
     </body>
